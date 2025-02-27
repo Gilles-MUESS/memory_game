@@ -1,9 +1,10 @@
 export default class Card {
   private imgId: string | null = null;
   private img: string | null = null;
+  private readyPromise: Promise<void>;
 
   constructor(url: string) {
-    this.fetchImgData(url).then((data) => {
+    this.readyPromise = this.fetchImgData(url).then((data) => {
       this.img = this.getImgUrl(data);
       this.imgId = this.getImgId(data);
     });
@@ -32,11 +33,15 @@ export default class Card {
   public createCard(): HTMLElement {
     const card = document.createElement('div');
     card.classList.add('card');
-    card.id = this.imgId ?? '';
+    card.id = this.getCardId() ?? '';
     const cardContent = document.createElement('img');
     cardContent.classList.add('card-content');
-    cardContent.src = this.img ? `${this.img}` : '';
+    cardContent.src = this.getCardImg() ? `${this.getCardImg()}` : '';
     card.appendChild(cardContent);
     return card;
+  }
+
+  public ready(): Promise<void> {
+    return this.readyPromise;
   }
 }
