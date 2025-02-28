@@ -33,7 +33,7 @@ export default class Card {
   public createCard(): HTMLElement {
     const card = document.createElement('div');
     card.classList.add('card');
-    card.id = this.getCardId() ?? '';
+    card.dataset.cardId = this.getCardId() ?? '';
     const cardContent = document.createElement('img');
     cardContent.classList.add('card-content');
     cardContent.src = this.getCardImg() ? `${this.getCardImg()}` : '';

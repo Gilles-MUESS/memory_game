@@ -1,19 +1,16 @@
 import Card from './card';
 
 export default class Board {
-  private bordElement: HTMLElement | null = null;
   public nbCards: number;
-  private baseUrl: string;
   private cards: Card[] = [];
+  private baseUrl: string;
 
   constructor(
-    bordElement: HTMLElement | null,
-    baseUrl: string,
-    nbCards: number = 16
+    nbCards: number = 16,
+    baseUrl: string = 'https://picsum.photos/100/166'
   ) {
-    this.bordElement = bordElement;
-    this.baseUrl = baseUrl;
     this.nbCards = nbCards;
+    this.baseUrl = baseUrl;
   }
 
   public shuffle(array: Array<any>): void {
@@ -34,8 +31,12 @@ export default class Board {
   }
 
   public getCards(): Card[] {
+    if (this.cards.length > 0) {
+      return this.cards;
+    }
+
     for (let i = 0; i < this.nbCards / 2; i++) {
-      this.cards.push(new Card('https://picsum.photos/100'));
+      this.cards.push(new Card(this.baseUrl));
     }
 
     this.cards.push(...this.cards);
